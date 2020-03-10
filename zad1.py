@@ -6,14 +6,14 @@ def load_image(file_path):
     img = cv2.imread(file_path,0)
     return img
 
-def display_image(image):
-    cv2.imshow(image,img)
+def display_image(image_url):
+    cv2.imshow("test",image_url)
     cv2.waitKey(0)
     cv2.destroyAllWindows()
 
 #script
 try:
-    img = load_image('/Users/paulinawyrwas/Documents/IMG_1505.jpg')
+    img = load_image('cat.jpg')
     display_image(img)
 except Exception as e:
     print(f"exception: {e}")
