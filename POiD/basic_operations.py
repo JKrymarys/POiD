@@ -43,11 +43,12 @@ def adjust_contrast(img, level):
         for y in range(img_width):
             for c in range(3):
                 value = img[x][y][c]
-                if (((value - 128)*level) + 128) >= 255:
+                if (((value - 128)*level) + 128) > 255:
                     new_color = 255
-                elif (((value - 128)*level) + 128) <= 0:
+                elif (((value - 128)*level) + 128) < 0:
                     new_color = 0
                 else:
                     new_color = ((value - 128)*level) + 128
                 new_img[x][y][c] = new_color
+                
     return new_img
