@@ -12,7 +12,11 @@ try:
 
     utils.display_image('brighter2', basic_operations.increase_image_brightness(img, 100))
     utils.display_image('darke2', basic_operations.decrease_image_brightness(img, 100))
-
+    
+    utils.display_image('contrast0', basic_operations.adjust_contrast(img, 0.5))
+    utils.display_image('contrastbase', basic_operations.adjust_contrast(img, 1))
+    utils.display_image('contrast', basic_operations.adjust_contrast(img, 1.5))
+    
     cv2.waitKey(0)
     cv2.destroyAllWindows()
 
