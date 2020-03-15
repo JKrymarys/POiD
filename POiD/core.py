@@ -3,25 +3,29 @@ import cv2
 import basic_operations
 import utils
 
-# try:
 img = utils.load_image('cat.jpg')
-utils.display_image('original',img)
 
-utils.display_image('brighter', basic_operations.adjust_brightness(img, 50))
-utils.display_image('darker', basic_operations.adjust_brightness(img, -50))
+def contrast_param_change(x):
+    value = x/10
+    utils.display_image('image',basic_operations.adjust_contrast(img, value))
 
-utils.display_image('brighter2', basic_operations.adjust_brightness(img, 100))
-utils.display_image('darke2', basic_operations.adjust_brightness(img, -100))
+def brightness_param_change(x):
+    value = x - 256
+    utils.display_image('image',basic_operations.adjust_brightness(img, value))
 
-utils.display_image('contrast0', basic_operations.adjust_contrast(img, 0.5))
-utils.display_image('contrastbase', basic_operations.adjust_contrast(img, 1))
-utils.display_image('contrast', basic_operations.adjust_contrast(img, 1.5))
+def negative_switch(x):
+    if x == 1:
+        utils.display_image('image', basic_operations.create_negative(img))
+    else:
+        utils.display_image('image', img)
 
-utils.display_image('negative', basic_operations.create_negative(img))
-
-
-cv2.waitKey(0)
-cv2.destroyAllWindows()
-
-# except Exception as e:
-#     print(f"Operation failed: {e}")
+try:
+    cv2.namedWindow('image')
+    cv2.createTrackbar('contrast','image',10,20, contrast_param_change)
+    cv2.createTrackbar('brightness','image', 256,512, brightness_param_change)
+    cv2.createTrackbar('negative','image', 0,1, negative_switch)
+    utils.display_image('image',img)
+    cv2.waitKey(0)
+    cv2.destroyAllWindows()
+except Exception as e:
+    print(f"Operation failed: {e}")
