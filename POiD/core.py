@@ -2,6 +2,7 @@
 import cv2 
 import basic_operations
 import utils
+import histogram
 
 img = utils.load_image('cat.jpg')
 
@@ -25,6 +26,7 @@ try:
     cv2.createTrackbar('brightness','image', 256,512, brightness_param_change)
     cv2.createTrackbar('negative','image', 0,1, negative_switch)
     utils.display_image('image',img)
+    histogram.display_histograms(img) 
     cv2.waitKey(0)
     cv2.destroyAllWindows()
 except Exception as e:
