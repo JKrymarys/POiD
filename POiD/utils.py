@@ -9,7 +9,6 @@ def load_image(file_path):
 def display_image(name,img, hist):
     cv2.imshow(name,img)
     histogram.update_histogram(img, hist)
-    # histogram.show()
 
 
 def display_histogram(img):

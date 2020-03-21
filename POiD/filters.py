@@ -29,29 +29,21 @@ def average_filter(img):
 
 
 def calculate_median(image, x, y, c):
-    temp = 0
     temp_arr = []
-    median_value = []
-    median_range = [-1,0,1,]
+    median_range = [-1,0,1]
     if x > 0 and x < 255 and y > 0 and y < 255:
-        print(image[x][y][c])
         for i in median_range:
             for j in median_range:
                 temp_arr.append(image[x+i][y+j][c])
-                print ("temp-arr: ", temp_arr)
 
-        temp_arr.sort()
-        median_value = temp_arr[4]
-        print ("HERE", temp_arr)  
-    else:
-        print("not changing: ", image[x][y][c])
-        median_value = image[x][y][c]
         
-    return median_value
-    
+        temp_arr.sort()
+        return temp_arr[4]
+    else:
+        return image[x][y][c]
 
 
-def median_filter_2(img):
+def median_filter(img):
     new_image = img.copy()
     img_height = utils.get_image_height(img)
     img_width = utils.get_image_width(img)
@@ -64,25 +56,25 @@ def median_filter_2(img):
     return new_image
 
 
-def median_filter(img, filter_size):
-    new_image = img.copy()
-    temp = []
-    indexer = filter_size // 2
-    img_height = utils.get_image_height(img)
-    img_width = utils.get_image_width(img)
-    for y in range(img_height):
-        for x in range(img_width):
-            for c in range(3):
-                for z in range(filter_size):
-                    if y + z - indexer < 0 or y + z - indexer > img_height - 1:
-                        temp.append(0)
-                    else:
-                        if x + z - indexer < 0 or x + indexer > img_width - 1:
-                            temp.append(0)
-                        else:
-                            for k in range(filter_size):
-                                temp.append(img[y + z - indexer][x + k - indexer][c])
-                    temp.sort()
-                    new_image[y][x][c] = temp[len(temp) // 2]
-                    temp = []
-    return new_image
+# def median_filter(img, filter_size):
+#     new_image = img.copy()
+#     temp = []
+#     indexer = filter_size // 2
+#     img_height = utils.get_image_height(img)
+#     img_width = utils.get_image_width(img)
+#     for y in range(img_height):
+#         for x in range(img_width):
+#             for c in range(3):
+#                 for z in range(filter_size):
+#                     if y + z - indexer < 0 or y + z - indexer > img_height - 1:
+#                         temp.append(0)
+#                     else:
+#                         if x + z - indexer < 0 or x + indexer > img_width - 1:
+#                             temp.append(0)
+#                         else:
+#                             for k in range(filter_size):
+#                                 temp.append(img[y + z - indexer][x + k - indexer][c])
+#                     temp.sort()
+#                     new_image[y][x][c] = temp[len(temp) // 2]
+#                     temp = []
+#     return new_image

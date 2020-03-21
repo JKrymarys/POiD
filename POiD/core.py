@@ -31,7 +31,7 @@ def average_filter_change(x):
 
 def median_filter_change(x):
     if x == 1:
-        utils.display_image('image', filters.median_filter(img, 10), hist)
+        utils.display_image('image', filters.median_filter(img), hist)
     else:
         utils.display_image('image', img, hist)
 
