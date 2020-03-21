@@ -33,8 +33,7 @@ def adjust_brightness_lut(pixel_value, parameter):
     elif pixel_value + parameter > 255:
         return 255
     else:
-        return pixel_value + parameter
-        
+        return pixel_value + parameter   
 
 
 def adjust_contrast_lut(pixel_value, parameter):
