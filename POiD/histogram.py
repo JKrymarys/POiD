@@ -39,9 +39,8 @@ def create_histogram(img):
 
     plt.title('Histogram (RGB)')
     plt.grid(True)
+    
     return plt
-
-    # plt.show()
 
 def update_histogram(img, plt):
     r = img[:,:,2]

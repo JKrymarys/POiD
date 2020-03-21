@@ -28,22 +28,24 @@ def average_filter(img):
     return new_image
 
 
-def calculate_median(image, x, y, c):
+def calculate_median(image, x, y, c, lvl):
     temp_arr = []
-    median_range = [-1,0,1]
-    if x > 0 and x < 255 and y > 0 and y < 255:
+    median_range = range(-lvl, lvl)
+
+    if x-lvl > 0 and x+lvl < 255 and y-lvl > 0 and y+lvl < 255:
         for i in median_range:
             for j in median_range:
                 temp_arr.append(image[x+i][y+j][c])
 
-        
+
         temp_arr.sort()
-        return temp_arr[4]
+        arr_length = len(temp_arr)
+        return temp_arr[ arr_length//2 ]
     else:
         return image[x][y][c]
 
 
-def median_filter(img):
+def median_filter(img, lvl=4):
     new_image = img.copy()
     img_height = utils.get_image_height(img)
     img_width = utils.get_image_width(img)
@@ -51,30 +53,7 @@ def median_filter(img):
     for y in range(img_height):
         for x in range(img_width):
             for c in range(3):
-                new_image[x][y][c] = calculate_median(img, x, y, c)
+                new_image[x][y][c] = calculate_median(img, x, y, c, lvl)
     
     return new_image
 
-
-# def median_filter(img, filter_size):
-#     new_image = img.copy()
-#     temp = []
-#     indexer = filter_size // 2
-#     img_height = utils.get_image_height(img)
-#     img_width = utils.get_image_width(img)
-#     for y in range(img_height):
-#         for x in range(img_width):
-#             for c in range(3):
-#                 for z in range(filter_size):
-#                     if y + z - indexer < 0 or y + z - indexer > img_height - 1:
-#                         temp.append(0)
-#                     else:
-#                         if x + z - indexer < 0 or x + indexer > img_width - 1:
-#                             temp.append(0)
-#                         else:
-#                             for k in range(filter_size):
-#                                 temp.append(img[y + z - indexer][x + k - indexer][c])
-#                     temp.sort()
-#                     new_image[y][x][c] = temp[len(temp) // 2]
-#                     temp = []
-#     return new_image
