@@ -33,9 +33,9 @@ def create_histogram(img):
     arr_g = np.array(histogram_values[1])
     arr_r = np.array(histogram_values[2])
 
-    plt.hist(arr_r,256,[0,256], facecolor='r');
-    plt.hist(arr_g,256,[0,256], facecolor='g');
-    plt.hist(arr_b,256,[0,256], facecolor='b');
+    plt.hist(arr_r,256,[0,256], facecolor='r')
+    plt.hist(arr_g,256,[0,256], facecolor='g')
+    plt.hist(arr_b,256,[0,256], facecolor='b')
 
     plt.title('Histogram (RGB)')
     plt.grid(True)
