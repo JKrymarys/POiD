@@ -1,0 +1,8 @@
+.control-panel {
+  display: flex;
+  flex-direction: column;
+}
+
+.standard-number {
+  margin: 20px;
+}
