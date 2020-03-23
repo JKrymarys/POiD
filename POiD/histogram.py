@@ -54,9 +54,9 @@ def update_histogram(img, plt):
     arr_r = np.array(histogram_values[2])
 
     plt.cla()
-    plt.hist(arr_r,256,[0,256], facecolor='r');
-    plt.hist(arr_g,256,[0,256], facecolor='g');
-    plt.hist(arr_b,256,[0,256], facecolor='b');
+    plt.hist(arr_r,256,[0,256], facecolor='r')
+    plt.hist(arr_g,256,[0,256], facecolor='g')
+    plt.hist(arr_b,256,[0,256], facecolor='b')
     plt.draw()
    
 
