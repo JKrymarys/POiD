@@ -2,14 +2,13 @@ import numpy as np
 import cv2
 import utils
 
-
 lut_size = 256
 
 def look_up_table(parameter, operation):
     lut = [0 for x in range(lut_size)]
 
     for it in range(lut_size):
-        lut[it] = operation(it, parameter);
+        lut[it] = operation(it, parameter)
 
     return lut
 
@@ -26,16 +25,14 @@ def basic_operations_core(parameter, img,  lut_operation ):
     
     return new_img
 
-
 def adjust_brightness_lut(pixel_value, parameter):
     if pixel_value + parameter < 0:
         return 0
     elif pixel_value + parameter > 255:
         return 255
     else:
-        return pixel_value + parameter   
-
-
+        return pixel_value + parameter
+    
 def adjust_contrast_lut(pixel_value, parameter):
     if (((pixel_value - 128)*parameter) + 128) > 255:
         return  255
@@ -46,13 +43,12 @@ def adjust_contrast_lut(pixel_value, parameter):
 
 
 def create_negative_lut(pixel_value, parameter):
-    new_value = 255 - pixel_value;
+    new_value = 255 - pixel_value
     if new_value < 0:
         return 0
     else :
         return new_value
-
-    
+   
 def adjust_brightness(img, parameter): 
     return basic_operations_core(parameter, img, adjust_brightness_lut)
 
