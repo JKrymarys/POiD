@@ -4,6 +4,7 @@ import basic_operations
 import utils
 import histogram
 import filters
+import transforms
 
 img = utils.load_image('girl.bmp')
 hist = histogram.create_histogram(img)
@@ -20,6 +21,12 @@ def brightness_param_change(x):
 def negative_switch(x):
     if x == 1:
         utils.display_image('image', basic_operations.create_negative(img), hist)
+    else:
+        utils.display_image('image', img, hist)
+
+def h2_switch(x):
+    if x == 1:
+        utils.display_image('image', transforms.H_2(img), hist)
     else:
         utils.display_image('image', img, hist)
 
@@ -44,6 +51,7 @@ cv2.createTrackbar('brightness','image', 256,512, brightness_param_change)
 cv2.createTrackbar('negative','image', 0,1, negative_switch)
 cv2.createTrackbar('average_filter','image', 0,3, average_filter_change)
 cv2.createTrackbar('median_filter','image', 0,3, median_filter_change)
+cv2.createTrackbar('h2_filter','image', 0,1, h2_switch)
 utils.display_image('image',img,hist)
 hist.show()
 cv2.waitKey(0)
