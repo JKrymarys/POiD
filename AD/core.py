@@ -23,39 +23,37 @@ def dominant(col):
     return dominant
 
 def correlation_data(df):
-    # col_correlations = data.corr()
-    # col_correlations.loc[:, :] = np.tril(col_correlations, k=-1)
-    # cor_pairs = col_correlations.stack()
     au_corr = df.corr().abs().unstack()
 
+    #get pairs to drop - those are pair on the diagonal that have correlation equal to 1
     pairs_to_drop = set()
     cols = df.columns
     for i in range(0, df.shape[1]):
         for j in range(0, i+1):
             pairs_to_drop.add((cols[i], cols[j]))
 
-    
     au_corr = au_corr.drop(labels=pairs_to_drop).sort_values(ascending=False)
     return au_corr[0:1]
 
-def hist(df, cols):
-    df.hist(column=cols)
+def hist(data, cols):
+    data[cols[0]].plot.hist(bins=40)
+    data[cols[1]].plot.hist(bins=40)
+    plt.legend(loc="upper right")
+    plt.xlabel('value [cm]')
+    plt.title("Iris Histogram")
+    plt.show()
 
-
-print("Median of attributes:\n", median(data[["sepal_length", "sepal_width", "petal_length", "petal_width"]]))
-print("\nMin of attributes:\n", min(data[["sepal_length", "sepal_width", "petal_length", "petal_width"]]))
-print("\nMax of attributes:\n", max(data[["sepal_length", "sepal_width", "petal_length", "petal_width"]]))
+print("Median of attributes:\n\n", median(data[["sepal_length", "sepal_width", "petal_length", "petal_width"]]))
+print("\nMin of attributes:\n\n", min(data[["sepal_length", "sepal_width", "petal_length", "petal_width"]]))
+print("\nMax of attributes:\n\n", max(data[["sepal_length", "sepal_width", "petal_length", "petal_width"]]))
 print("\nDominant: ", dominant(data["class"]))
 
 #Narysować histogramy dla dwóch cech ilościowych najbardziej ze sobą skorelowanych
 
-print("\nCorrelations:\n", data.corr())
+#Print correlations for entire dataset
+print("\nCorrelations:\n\n", data.corr())
 
-print("\nMost correlated pair:\n", correlation_data(data[["sepal_length", "sepal_width", "petal_length", "petal_width"]]))
+print("\nMost correlated pair:\n\n", correlation_data(data[["sepal_length", "sepal_width", "petal_length", "petal_width"]]))
 
 cor_column_names = correlation_data(data[["sepal_length", "sepal_width", "petal_length", "petal_width"]]).index[0]
-
-#hist(data, cor_column_names[0])
-	
-data['petal_length'].plot.hist(bins=100)
-plt.show()
+hist(data, cor_column_names)	
