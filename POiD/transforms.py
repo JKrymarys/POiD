@@ -33,5 +33,26 @@ def H_2(img):
             
     return new_image
     
-def s_6(img):   
-    kernel = np.array([[-2, -1, 0], [-1, 1, 1], [0, 1, 2]])
+def s_6(img, mask):   
+    new_image = img.copy()
+    img_height = utils.get_image_height(img)
+    img_width = utils.get_image_width(img)
+    
+    img_region = np.ones((3,3))
+    for c in range(3):
+        for x in range(1, img_width-1):
+            for y in range(1, img_height-1):
+                s = 0
+                s_divider = 0
+                for l in range(-1,2):
+                    for k in range(-1,2):
+                        s += img[x+l][y+k][c] * mask[l+1][k+1]
+                        s_divider += mask[l+1][k+1]
+                if s_divider == 0:
+                    new_image[x][y][c] = new_image[x][y][c] * s
+                    print(s_divider)
+                else:
+                    new_image[x][y][c] = new_image[x][y][c] * (s/s_divider)
+                    print(s_divider)
+
+    return new_image
