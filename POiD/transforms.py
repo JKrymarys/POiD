@@ -1,18 +1,11 @@
 import cv2
 import utils
 import matplotlib.pyplot as plt
+from math import log1p
 import numpy as np
 import histogram
 
 lut_size = 256
-
-def look_up_table(operation):
-    lut = [0 for x in range(lut_size)]
-
-    for it in range(lut_size):
-        lut[it] = operation(it)
-
-    return lut
 
 def H_2(img):
     new_image = img.copy()
@@ -21,15 +14,18 @@ def H_2(img):
     gsum = 0
     gmax = 255
     gmin = 0
+    alpha = 100
     numofpixels = img_width*img_height
-    
+    lut = [0 for x in range(lut_size)]
+    hist = histogram.calc_histogram(img)
+
     for c in range(3):
-        hist = histogram.calc_histogram(img)
         for i in range(lut_size):
             gsum = 0
             for m in range(i):
-                gsum += hist[m]
-            lut[i] = look_up_table(gmin + (gmax - gmin) * (1.0 / numofpixels) * gsum)
+                gsum += hist[c][m]
+            #lut[i] = gmin + (gmax - gmin) * (1.0 / numofpixels) * gsum
+            lut[i] = gmin - (1 / alpha) * log1p(1 - (1.0 / numofpixels) * gsum)
         
     for x in range(img_width):
         for y in range(img_height):
