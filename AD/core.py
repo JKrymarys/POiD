@@ -6,21 +6,17 @@ import matplotlib.pyplot as plt
 data = pd.read_csv('iris.data', sep=",", header=None)
 data.columns = ["sepal_length", "sepal_width", "petal_length", "petal_width", "class"]
 
-def median(df):
-    median = df.median(axis=0)
-    return median
+def calculate_median(df):
+    return df.median(axis=0)
 
-def min(df):
-    min = df.min(axis=0)
-    return min
+def get_min(df):
+    return df.min(axis=0)
 
-def max(df):
-    max = df.max(axis=0)
-    return max
+def get_max(df):
+    return df.max(axis=0)
 
-def dominant(col):
-    dominant = col.mode().iloc[0]
-    return dominant
+def get_dominant(col):
+    return col.mode().iloc[0]
 
 def correlation_data(df):
     au_corr = df.corr().abs().unstack()
@@ -28,14 +24,15 @@ def correlation_data(df):
     #get pairs to drop - those are pair on the diagonal that have correlation equal to 1
     pairs_to_drop = set()
     cols = df.columns
-    for i in range(0, df.shape[1]):
+    number_of_cols = df.shape[1]
+    for i in range(0, number_of_cols):
         for j in range(0, i+1):
             pairs_to_drop.add((cols[i], cols[j]))
 
     au_corr = au_corr.drop(labels=pairs_to_drop).sort_values(ascending=False)
     return au_corr[0:1]
 
-def hist(data, cols):
+def display_hist(data, cols):
     data[cols[0]].plot.hist(bins=40)
     data[cols[1]].plot.hist(bins=40)
     plt.legend(loc="upper right")
