@@ -3,7 +3,7 @@ import pandas as pd
 import matplotlib.pyplot as plt
 #Dla poszczególnych atrybutów wyznaczyć medianę, minimum i maximum dla cech ilościowych i dominantę dla cech jakościowych
 
-data = pd.read_csv('iris.data', sep=",", header=None)
+data = pd.read_csv('datasets/iris.data', sep=",", header=None)
 data.columns = ["sepal_length", "sepal_width", "petal_length", "petal_width", "class"]
 
 def calculate_median(df):
