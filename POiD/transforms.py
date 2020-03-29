@@ -56,3 +56,28 @@ def s_6(img, mask):
                     print(s_divider)
 
     return new_image
+
+
+def o_2(img): 
+    new_image = img.copy()
+    img_height = utils.get_image_height(img)
+    img_width = utils.get_image_width(img)
+    
+    # img_region = np.ones((3,3))
+    for c in range(3):
+        for x in range(1, img_width-1):
+            for y in range(1, img_height-1):
+               new_image[x][y][c] = calculate_value_o_2(x,y,c,img)
+
+    return new_image
+
+
+def calculate_value_o_2(x,y,c,img): 
+    temp = abs(img[x][y][c] - img[x+1][y+1][c]) + abs(img[x][y+1][c] - img[x+1][y][c])
+    if(temp > 256):
+        return 256
+    elif(temp < 0):
+        return 0
+
+    return temp
+
