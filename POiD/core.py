@@ -55,11 +55,11 @@ def s6_masks(mask):
     mask2 = np.array([[-1, 2, -1], [-1, 2, -1], [-1, 2, -1]])
     mask3 = np.array([[-1, -1, 2], [-1, 2, -1], [2, -1, -1]])
     mask4 = np.array([[2, -1, -1], [-1, 2, -1], [-1, -1, 2]])
-    masks = [mask1, mask2, mask3,mask4]
+    masks = [mask1, mask2, mask3, mask4]
 
     print("Chosen mask", mask)
     if mask != 0:
-        utils.display_image('image', transforms.s_6(img, masks[mask]), hist)
+        utils.display_image('image', transforms.s_6(img, masks[mask-1]), hist)
     else:
         utils.display_image('image', img, hist)
 
@@ -75,7 +75,7 @@ cv2.createTrackbar('average_filter','image', 0,3, average_filter_change)
 cv2.createTrackbar('median_filter','image', 0,3, median_filter_change)
 cv2.createTrackbar('h2_filter','image', 0,1, h2_switch)
 cv2.createTrackbar('o2_filter','image', 0,1, o2_switch)
-cv2.createTrackbar('s6_masks','image', 0,3, s6_masks)
+cv2.createTrackbar('s6_masks','image', 0,4, s6_masks)
 utils.display_image('image',img,hist)
 hist.show()
 cv2.waitKey(0)
