@@ -23,13 +23,16 @@ value_to_compare = 0
 # key = "depth"
 # value_to_compare = 300
 
-
-
 print(df)
-values_sum =0
 
-for row in range(df.shape[0]):
-    values_sum += df[key].iloc[row]
+
+def calculate_average(df, key):
+    values_sum =0
+    for row in range(df.shape[0]):
+        values_sum += df[key].iloc[row]
+    return values_sum/df.shape[0]
+
+def calculate_
 
 
 def test_hypothesis(to_compare, result):
@@ -52,6 +55,7 @@ def create_histogram(col, to_compare, result, hipothesis_result):
     plt.xlabel('depth')
     plt.title("Histogram")
     plt.show()
+
 
 
 result_calculated = values_sum/df.shape[0]
