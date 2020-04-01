@@ -14,7 +14,7 @@ df_female = df[df["Sex"] == "F"]
 df_male = df[df["Sex"] == "M"]
 
 def test_normal_distribution(p_group, alpha):
-    return p_group < alpha
+    return p_group > alpha
 
 def test_hipothesis(p, alpha):
     return p > alpha
@@ -22,7 +22,7 @@ def test_hipothesis(p, alpha):
 W, p_female = st.shapiro(df_female["Hwt"])
 print('For female cats normal distribution test result is:', test_normal_distribution(p_female, alpha))
 W, p_male = st.shapiro(df_male["Hwt"])
-print('For female cats normal distribution test result is:', test_normal_distribution(p_male, alpha))
+print('For male cats normal distribution test result is:', test_normal_distribution(p_male, alpha))
 
 t, p = st.ttest_ind(df_female["Hwt"], df_male["Hwt"])
 hypothesis_result = test_hipothesis(p, alpha)
@@ -36,28 +36,17 @@ def display_hist(data_female, data_male):
     plt.show()
 
 def create_histogram(df_m, df_f, hypothesis_result):
-    # min_interval = min_value
-    # max_interval = max_value
-    n_f, bins_f, patches_f = py.hist(df_f["Hwt"], 10, density=True, facecolor='green', alpha=0.75)
+    n_f, bins_f, patches_f = py.hist(df_f["Hwt"], 10, density=True, facecolor='green', alpha=0.75, label='Female Cats')
     bincenters_f = 0.5*(bins_f[1:]+bins_f[:-1])
     y_f = st.norm.pdf( bincenters_f, loc = df_f["Hwt"].mean(axis=0), scale = df_f["Hwt"].std())
-    l_f = py.plot(bincenters_f, y_f, 'r--', linewidth=1)
-    n_m, bins_m, patches_m = py.hist(df_m["Hwt"], 10, density=True, facecolor='blue', alpha=0.75)
+    l_f = py.plot(bincenters_f, y_f, 'r--', linewidth=1, color='green')
+    n_m, bins_m, patches_m = py.hist(df_m["Hwt"], 10, density=True, facecolor='blue', alpha=0.75, label='Male Cats')
     bincenters_m = 0.5*(bins_m[1:]+bins_m[:-1])
     y_m = st.norm.pdf( bincenters_m, loc = df_m["Hwt"].mean(axis=0), scale = df_m["Hwt"].std())
-    l_m = py.plot(bincenters_m, y_m, 'r--', linewidth=1)
-    # plt.axvline(to_compare, color='red', label="hypothesis value")
-    # plt.axvline(min_interval, color='red', label="hypothesis value margin", linestyle='dashed')
-    # plt.axvline(max_interval, color='red', linestyle='dashed')
-    # plt.axvspan(min_interval, max_interval, alpha=0.2, color='red')
-    # plt.axvline(min_interval, color='orange', label="calculated value margin", linestyle='dashed')
-    # plt.axvline(max_interval, color='orange', linestyle='dashed')
-    # plt.axvspan(min_interval, max_interval, alpha=0.2, color='orange')
-    # plt.axvline(result, color='orange', label="calculated value")
-    plt.legend(loc="upper left", fontsize="x-small")
+    l_m = py.plot(bincenters_m, y_m, 'r--', linewidth=1, color='blue')
+    plt.legend(['Female cats', "Male cats"], loc="upper left", fontsize="x-small")
     plt.text(16, 0.2, f"Hypothesis result: {hypothesis_result}", bbox=dict(facecolor='white', alpha=0.5), fontsize="x-small")
-    #plt.text(value_to_compare, 0, f"Hypothesis result: {hypothesis_result}", bbox=dict(facecolor='white', alpha=0.5), fontsize="x-small")
-    plt.xlabel('value [kg]')
+    plt.xlabel('Hwt [kg]')
     plt.title("Cats Histogram")
     plt.show()
 
