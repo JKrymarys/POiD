@@ -40,17 +40,17 @@ def display_hist(data, cols):
     plt.title("Iris Histogram")
     plt.show()
 
-print("Median of attributes:\n\n", calculate_median(data[["sepal_length", "sepal_width", "petal_length", "petal_width"]]))
-print("\nMin of attributes:\n\n", get_min(data[["sepal_length", "sepal_width", "petal_length", "petal_width"]]))
-print("\nMax of attributes:\n\n", get_max(data[["sepal_length", "sepal_width", "petal_length", "petal_width"]]))
-print("\nDominant: ", get_dominant(data["class"]))
+# print("Median of attributes:\n\n", calculate_median(data[["sepal_length", "sepal_width", "petal_length", "petal_width"]]))
+# print("\nMin of attributes:\n\n", get_min(data[["sepal_length", "sepal_width", "petal_length", "petal_width"]]))
+# print("\nMax of attributes:\n\n", get_max(data[["sepal_length", "sepal_width", "petal_length", "petal_width"]]))
+# print("\nDominant: ", get_dominant(data["class"]))
 
-#Narysować histogramy dla dwóch cech ilościowych najbardziej ze sobą skorelowanych
+# #Narysować histogramy dla dwóch cech ilościowych najbardziej ze sobą skorelowanych
 
-#Print correlations for entire dataset
-print("\nCorrelations:\n\n", data.corr())
+# #Print correlations for entire dataset
+# print("\nCorrelations:\n\n", data.corr())
 
-print("\nMost correlated pair:\n\n", correlation_data(data[["sepal_length", "sepal_width", "petal_length", "petal_width"]]))
+# print("\nMost correlated pair:\n\n", correlation_data(data[["sepal_length", "sepal_width", "petal_length", "petal_width"]]))
 
-cor_column_names = correlation_data(data[["sepal_length", "sepal_width", "petal_length", "petal_width"]]).index[0]
-display_hist(data, cor_column_names)	
+# cor_column_names = correlation_data(data[["sepal_length", "sepal_width", "petal_length", "petal_width"]]).index[0]
+# display_hist(data, cor_column_names)	
