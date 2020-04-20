@@ -19,3 +19,15 @@ def calculate_missing_values(df, column):
 
 for col in df.columns:
     calculate_missing_values(df, col)
+
+for feature in missing_columns:
+        
+    deter_data["Det" + feature] = df[feature + "_imp"]
+    parameters = list(set(df.columns) - set(missing_columns) - {feature + '_imp'})
+    
+    #Create a Linear Regression model to estimate the missing data
+    model = linear_model.LinearRegression()
+    model.fit(X = df[parameters], y = df[feature + '_imp'])
+    
+    #observe that I preserve the index of the missing data from the original dataframe
+    deter_data.loc[df[feature].isnull(), "Det" + feature] = model.predict(df[parameters])[df[feature].isnull()]
