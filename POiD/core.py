@@ -60,18 +60,25 @@ def median_filter_change(lvl):
 #------------------------ EXERCISE 2 --------------------------------
 x = np.matrix([[1,2,1],[2,1,2],[0,1,1]])
 print(img_grayscale.shape)
-X, m, n = fft.fft2(img_grayscale)
-fshift = fft.fftshift(X)
-magnitude_spectrum = 20*np.log(np.abs(fshift))
-print('\nDFT is :')
-print(X)
-print('\nOriginal signal is :')
-print(fft.ifft2(X, m, n))
 
-plt.subplot(121),plt.imshow(img_grayscale, cmap = 'gray')
+#fft
+F, m, n = fft.fft2(img_grayscale)
+fshift = fft.fftshift(F)
+magnitude_spectrum = 20*np.log(np.abs(fshift))
+phase_spectrum = np.angle(fshift)
+
+#inverse fft
+img_back = fft.ifft2(F,m,n)
+
+plt.subplot(141),plt.imshow(img_grayscale, cmap = 'gray')
 plt.title('Input Image'), plt.xticks([]), plt.yticks([])
-plt.subplot(122),plt.imshow(magnitude_spectrum, cmap = 'gray')
+plt.subplot(142),plt.imshow(magnitude_spectrum, cmap = 'gray')
 plt.title('Magnitude Spectrum'), plt.xticks([]), plt.yticks([])
+plt.subplot(143),plt.imshow(phase_spectrum, cmap = 'gray')
+plt.title('Phase Spectrum'), plt.xticks([]), plt.yticks([])
+plt.subplot(144),plt.imshow(img_back, cmap = 'gray')
+plt.title('Inverse Image'), plt.xticks([]), plt.yticks([])
+plt.tight_layout()
 plt.show()
 
 # cv2.waitKey(0)
