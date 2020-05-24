@@ -62,3 +62,12 @@ def fftshift(F):
    sF[int(M/2): M, int(N/2): N], sF[0: int(M/2), 0: int(N/2)] = R1, R4
    sF[int(M/2): M, 0: int(N/2)], sF[0: int(M/2), int(N/2): N]= R3, R2
    return sF
+
+def ifftshift(F,M,N):
+   # this shifts the centre of FFT of images/2-d signals
+   R1, R2 = F[0: int(M/2), 0: int(N/2)], F[int(M/2): M, 0: int(N/2)]
+   R3, R4 = F[0: int(M/2), int(N/2): N], F[int(M/2): M, int(N/2): N]
+   sF = np.zeros(F.shape,dtype = F.dtype)
+   sF[int(M/2): M, int(N/2): N], sF[0: int(M/2), 0: int(N/2)] = R1, R4
+   sF[int(M/2): M, 0: int(N/2)], sF[0: int(M/2), int(N/2): N]= R3, R2
+   return sF

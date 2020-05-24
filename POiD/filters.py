@@ -1,6 +1,8 @@
 import numpy as np
 import cv2
 import utils
+import fft
+from math import pi
 
 def filter(img, lvl, filter_type):
     new_image = img.copy()
@@ -63,3 +65,84 @@ def median(x, y, c, lvl, img_height, img_width):
         new_pixel = c[x][y]
 
     return new_pixel
+
+def low_pass(img):
+    # Circular HPF mask, center circle is 0, remaining all ones
+    rows, cols = img.shape
+    crow, ccol = int(rows / 2), int(cols / 2)
+
+    mask = np.zeros((rows, cols), np.uint8)
+    r = 30
+    center = [crow, ccol]
+    x, y = np.ogrid[:rows, :cols]
+    mask_area = (x - center[0]) ** 2 + (y - center[1]) ** 2 <= r*r
+    mask[mask_area] = 1
+    return mask
+
+def high_pass(img):
+    # Circular HPF mask, center circle is 0, remaining all ones
+    rows, cols = img.shape
+    crow, ccol = int(rows / 2), int(cols / 2)
+
+    mask = np.ones((rows, cols), np.uint8)
+    r = 30
+    center = [crow, ccol]
+    x, y = np.ogrid[:rows, :cols]
+    mask_area = (x - center[0]) ** 2 + (y - center[1]) ** 2 <= r*r
+    mask[mask_area] = 0
+    return mask
+
+def band_pass(img):
+    rows, cols = img.shape
+    crow, ccol = int(rows / 2), int(cols / 2)
+
+    mask = np.zeros((rows, cols), np.uint8)
+    r_out = 80
+    r_in = 10
+    center = [crow, ccol]
+    x, y = np.ogrid[:rows, :cols]
+    mask_area = np.logical_and(((x - center[0]) ** 2 + (y - center[1]) ** 2 >= r_in ** 2),
+                           ((x - center[0]) ** 2 + (y - center[1]) ** 2 <= r_out ** 2))
+    mask[mask_area] = 1
+    return mask
+
+def band_reject(img):
+    rows, cols = img.shape
+    crow, ccol = int(rows / 2), int(cols / 2)
+
+    mask = np.ones((rows, cols), np.uint8)
+    r_out = 50
+    r_in = 20
+    center = [crow, ccol]
+    x, y = np.ogrid[:rows, :cols]
+    mask_area = np.logical_and(((x - center[0]) ** 2 + (y - center[1]) ** 2 >= r_in ** 2),
+                           ((x - center[0]) ** 2 + (y - center[1]) ** 2 <= r_out ** 2))
+    mask[mask_area] = 0
+    return mask
+
+def edge_detection(img):
+    rows, cols = img.shape
+    crow, ccol = int(rows / 2), int(cols / 2)
+
+    mask = np.zeros((rows, cols), np.uint8)
+    r_out = 150
+    r_in = 15
+    center = [crow, ccol]
+    x, y = np.ogrid[:rows, :cols]
+    mask_area = np.logical_and(((x - center[0]) ** 2 + (y - center[1]) ** 2 >= r_in ** 2),
+                           ((x - center[0]) ** 2 + (y - center[1]) ** 2 <= r_out ** 2))
+    mask[mask_area] = 1
+    return mask
+
+def spectrum_modification(img):
+    N, M = img.shape
+    F, m, n = fft.fft2(img)
+    fshift = fft.fftshift(F)
+    phase_spectrum = np.angle(fshift)
+    k = 1
+    l = 1
+    for n in range(N):
+        for m in range(M):
+            combined = np.multiply(np.abs(phase_spectrum), np.exp(1j*(((-n*k*2*pi)/N)+((-m*l*2*pi)/M)+(k+l)*pi)))
+    imgCombined = np.real(fft.ifft2(combined, m, n))
+    return imgCombined
