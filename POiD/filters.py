@@ -138,11 +138,15 @@ def spectrum_modification(img):
     N, M = img.shape
     F, m, n = fft.fft2(img)
     fshift = fft.fftshift(F)
+    combined = [[0 for i in range(N-1)] for j in range(M-1)]
     phase_spectrum = np.angle(fshift)
+    print(phase_spectrum.shape)
     k = 1
     l = 1
-    for n in range(N):
-        for m in range(M):
-            combined = np.multiply(np.abs(phase_spectrum), np.exp(1j*(((-n*k*2*pi)/N)+((-m*l*2*pi)/M)+(k+l)*pi)))
+    for n in range(0, N-1):
+        for m in range(0, M-1):
+            combined[n][m] = np.multiply((phase_spectrum[n][m]), np.exp(1j*(((-n*k*2*pi)/N)+((-m*l*2*pi)/M)+(k+l)*pi)))
+            print(combined[n][m])
     imgCombined = np.real(fft.ifft2(combined, m, n))
+    print (imgCombined)
     return imgCombined

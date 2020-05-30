@@ -125,34 +125,34 @@ plt.subplot(236),plt.imshow(img_back_edge, cmap = 'gray')
 plt.title('Edge Detection'), plt.xticks([]), plt.yticks([])
 
 
-# plt.figure(figsize=(11,6))
-# plt.subplot(121),plt.imshow(img_grayscale, cmap = 'gray')
-# plt.title('Input Image'), plt.xticks([]), plt.yticks([])
-# plt.subplot(122),plt.imshow(img_filtered, cmap = 'gray')
-# plt.title('Filtered'), plt.xticks([]), plt.yticks([])
-#plt.show()
+plt.figure(figsize=(11,6))
+plt.subplot(121),plt.imshow(img_grayscale, cmap = 'gray')
+plt.title('Input Image'), plt.xticks([]), plt.yticks([])
+plt.subplot(122),plt.imshow(img_filtered, cmap = 'gray')
+plt.title('Filtered'), plt.xticks([]), plt.yticks([])
+plt.show()
 
-def on_mouse(event, x, y, flags, params):
-    if event == cv2.EVENT_LBUTTONDOWN:
-        print('Start Mouse Position: ' + str(x) + ', ' + str(y))
-        s_box = x, y
-        boxes.append(s_box)
+# def on_mouse(event, x, y, flags, params):
+#     if event == cv2.EVENT_LBUTTONDOWN:
+#         print('Start Mouse Position: ' + str(x) + ', ' + str(y))
+#         s_box = x, y
+#         boxes.append(s_box)
 
-boxes = []
-filename = 'girl.bmp'
-img = cv2.imread(filename, 0)
-resized = cv2.resize(img,(256,256))
-cv2.namedWindow('input')
-cv2.setMouseCallback('input', on_mouse, 0,)
-cv2.imshow('input', resized)
-cv2.waitKey()
-print("Starting region growing based on last click")
-seed = boxes[-1]
-cv2.imshow('input', segmentation.region_growing(resized, seed))
-print("Done. Showing output now")
+# boxes = []
+# filename = 'girl.bmp'
+# img = cv2.imread(filename, 0)
+# resized = cv2.resize(img,(256,256))
+# cv2.namedWindow('input')
+# cv2.setMouseCallback('input', on_mouse, 0,)
+# cv2.imshow('input', resized)
+# cv2.waitKey()
+# print("Starting region growing based on last click")
+# seed = boxes[-1]
+# cv2.imshow('input', segmentation.region_growing(resized, seed))
+# print("Done. Showing output now")
 
-cv2.waitKey()
-cv2.destroyAllWindows()
+# cv2.waitKey()
+# cv2.destroyAllWindows()
 
 # cv2.waitKey(0)
 # cv2.destroyAllWindows()
