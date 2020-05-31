@@ -68,7 +68,7 @@ def create_class_weight(labels_dict ,mu=0.15):
 class_weight = create_class_weight(weights_dict)
 print(class_weight)
 
-callback = tf.keras.callbacks.EarlyStopping(monitor='val_loss', min_delta=0, patience=0, verbose=0, mode='auto', baseline=None, restore_best_weights=False)
+callback = tf.keras.callbacks.EarlyStopping(monitor='val_loss', min_delta=0, patience=2, verbose=0, mode='auto', baseline=None, restore_best_weights=False)
 
 # Build a  model
 inputs = keras.Input(shape=(200, 200,3))
@@ -84,7 +84,7 @@ model.summary()
 
 model.compile(optimizer='adam', loss="sparse_categorical_crossentropy", metrics=["accuracy"],)
 
-epochs = 5
+epochs = 10
 history = model.fit(train_ds, epochs=epochs, validation_data=val_ds, class_weight = class_weight, callbacks=[callback])
 
 fig, ax = plt.subplots()
